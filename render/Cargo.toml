@@ -1,0 +1,12 @@
+[package]
+name = "mandelbrot"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+raqote = "0.8.5"
+gif = "0.12"
+minifb = "0.24"
+rayon = "1.7"
+num-bigfloat = "1.7"
+
