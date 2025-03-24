@@ -2,8 +2,6 @@ use std::ops::{Add, Mul};
 use rayon::prelude::*;
 use num_bigfloat::BigFloat;
 
-const PRECISION: usize = 100;  // Number of decimal places for precision
-
 #[derive(Clone)]
 pub struct HighPrecComplex {
     real: BigFloat,
@@ -22,13 +20,6 @@ impl HighPrecComplex {
         let r = self.real.clone();
         let i = self.imag.clone();
         r * r + i * i
-    }
-
-    fn to_complex(&self) -> Complex {
-        Complex::new(
-            self.real.to_f64(),
-            self.imag.to_f64()
-        )
     }
 
     fn mul(&self, other: &HighPrecComplex) -> HighPrecComplex {
@@ -73,14 +64,6 @@ impl Complex {
 
     pub fn magnitude_squared(&self) -> f64 {
         self.real * self.real + self.imag * self.imag
-    }
-
-    pub fn scale(&self, factor: f64) -> Complex {
-        Complex {
-            real: self.real * factor,
-            imag: self.imag * factor,
-            error: self.error,
-        }
     }
 }
 

@@ -7,7 +7,6 @@ use mandelbrot::MandelbrotFrame;
 use frame_handler::FrameHandler;
 use viewer_handler::ViewerHandler;
 use minifb::Key;
-use std::time::Instant;
 
 fn main() -> std::io::Result<()> {
     let width = 800;
@@ -21,7 +20,6 @@ fn main() -> std::io::Result<()> {
     let mut center_y = 0.0;
     let mut zoom: f64 = 1.0;
     let mut base_iterations = 100;
-    let mut last_frame_time = Instant::now();
     
     // Movement speed control
     let base_speed = 0.02;
