@@ -6,6 +6,7 @@ pub struct ViewerHandler {
     buffer: Vec<u32>,
     width: usize,
     height: usize,
+    previous_keys: Vec<Key>,
 }
 
 impl ViewerHandler {
@@ -30,6 +31,7 @@ impl ViewerHandler {
             buffer: vec![0; width * height],
             width,
             height,
+            previous_keys: Vec::new(),
         }
     }
 
@@ -39,6 +41,23 @@ impl ViewerHandler {
 
     pub fn is_key_down(&self, key: Key) -> bool {
         self.window.is_key_down(key)
+    }
+
+    pub fn is_key_pressed(&mut self, key: Key) -> bool {
+        let is_down = self.window.is_key_down(key);
+        let was_down = self.previous_keys.contains(&key);
+        let is_pressed = is_down && !was_down;
+        
+        // Update key state
+        if is_down && !was_down {
+            self.previous_keys.push(key);
+        } else if !is_down && was_down {
+            if let Some(pos) = self.previous_keys.iter().position(|&k| k == key) {
+                self.previous_keys.remove(pos);
+            }
+        }
+        
+        is_pressed
     }
 
     pub fn update(&mut self, draw_target: &DrawTarget) -> bool {
